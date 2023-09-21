@@ -23,6 +23,31 @@ document.getElementById("form").addEventListener("submit", function() {
     }).then(res => res.json()).then(newProduct => console.log(newProduct)).catch(error => console.log(error));
 })
 
+document.getElementById("oneProduct").addEventListener("submit", function() {
+  const product = document.getElementById("product").value;
+
+    fetch(`http://localhost:8080/api/produtos/${product}`).then((data) =>{
+      return data.json();
+    }).then((productShow) =>{
+      let data1 = "";
+      productShow.map((values) =>{
+          data1 += `
+      <tbody>
+        <tr>
+          <td scope="row">${values.id}</th>
+          <td>${values.name}</th>
+          <td>${values.description}</th>
+          <td>${values.price}</th>
+          <td>${values.amount}</th>
+          <td>${values.category}</th>
+        </tr>
+      </tbody>`
+    })
+    document.getElementById("productData").innerHTML = data1;
+    console.log(allProducts);
+  });
+})
+
 
 fetch("http://localhost:8080/api/produtos").then((data)=>{
   return data.json();
